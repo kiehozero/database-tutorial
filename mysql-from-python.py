@@ -23,6 +23,7 @@ try:
         connection.commit()
         # commit() saves the changes to the table
 
+
 finally:
     # Close connection whether above was successful or not
     connection.close()
