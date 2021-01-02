@@ -1,4 +1,5 @@
 import os
+import datetime
 import pymysql
 
 # Get username
@@ -15,10 +16,12 @@ connection = pymysql.connect(host='localhost',
 try:
     # Run a query
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        list_of_names = ['Fred', 'Tony']
+        # Prepare a string with the same number of placeholders as in list_of_names
+        format_strings = ",".join(['%s']*len(list_of_names))
+        cursor.execute("DELETE FROM Friends WHERE Name IN({});".format(format_strings), list_of_names)
+        connection.commit()
+        # commit() saves the changes to the table
 
 finally:
     # Close connection whether above was successful or not
